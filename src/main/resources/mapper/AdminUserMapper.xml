@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.iswust.dao.AdminUserDao">
+    <resultMap id="adminUserMap" type="com.iswust.model.AdminUser">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="stu_num" property="stuNum" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="phone_num" property="phoneNum" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="addAdminUser" parameterType="com.iswust.model.AdminUser">
+        INSERT INTO
+            community_admin_user
+        VALUES
+            (#{user.id}, #{user.stuNum}, #{user.name}, #{user.phoneNum})
+    </insert>
+
+    <update id="updateAdminUser" parameterType="com.iswust.model.AdminUser">
+        UPDATE
+            community_admin_user
+        SET
+            `name` = #{user.name}, stu_num = #{user.stuNum}, phone_num = #{user.phoneNum}
+        WHERE
+            id = #{user.id} AND stu_num = #{user.stuNum}
+    </update>
+
+    <delete id="deleteAdminUser" parameterType="com.iswust.model.AdminUser">
+        DELETE FROM
+            community_admin_user
+        WHERE
+            id = #{user.id} AND stu_num = #{user.stuNum}
+    </delete>
+
+    <select id="selectAdminUserById" resultMap="adminUserMap">
+        SELECT
+            *
+        FROM
+            community_admin_user
+        WHERE
+        id = #{id}
+    </select>
+
+
+</mapper>

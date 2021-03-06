@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.iswust.dao.CommunityDao">
+    <resultMap id="community" type="com.iswust.model.Community">
+        <id column="co_id" property="co_id"/>
+        <result column="co_name" property="co_name"/>
+        <result column="co_cate" property="co_cate"/>
+        <result column="co_level" property="co_level"/>
+        <result column="co_organ" property="co_organ"/>
+        <result column="co_intro" property="co_intro"/>
+        <collection property="co_active" javaType="Collection" ofType="com.iswust.model.CommunityActivity">
+            <id column="ac_id" property="ac_id"/>
+            <result column="ac_address" property="ac_address"/>
+            <result column="ac_sponsor" property="ac_sponsor"/>
+            <result column="ac_time" property="ac_time"/>
+            <result column="ac_theme" property="ac_theme"/>
+        </collection>
+        <collection property="co_consu" javaType="Collection" ofType="com.iswust.model.CommunityConsultation">
+            <id column="comcon_id" property="comcon_id" />
+            <result column="comcon_title" property="comcon_title"/>
+            <result column="comcon_content" property="comcon_content"/>
+        </collection>
+    </resultMap>
+
+    <select id="communityselectByid" resultMap="community">
+        SELECT
+        co_id,
+        co_name,
+        co_level,
+        co_cate,
+        co_organ,
+        co_intro,
+        ac_theme,
+        ac_address,
+        ac_sponsor,
+        ac_id,
+        ac_time,
+        comcon_title,
+        comcon_content,
+        comcon_id
+        FROM
+        community c,
+        communityactivity cy,
+        communityconsultation cn
+        WHERE
+        c.co_id = cy.ac_id
+        AND c.co_id = cn.comcon_id
+        AND c.co_id = #{id};
+    </select>
+
+
+    <!--  <select id="communityselectByname" resultMap="community">
+       select co_id from community where co_name=#{name}
+      </select>-->
+
+
+    <select id="communityselectByname" resultMap="community">
+        SELECT
+        co_id,
+        co_name,
+        co_level,
+        co_cate,
+        co_organ,
+        co_intro,
+        ac_theme,
+        ac_address,
+        ac_sponsor,
+        ac_id,
+        ac_time,
+        comcon_title,
+        comcon_content,
+        comcon_id
+        FROM
+        community c,
+        communityactivity cy,
+        communityconsultation cn
+        WHERE
+        c.co_id = cy.ac_id
+        AND c.co_id = cn.comcon_id
+        AND co_name = #{name};
+    </select>
+
+    <delete id="communitydeleteByname">
+        delete from community where co_name=#{co_name};
+    </delete>
+
+
+</mapper>

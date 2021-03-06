@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iswust.dao.ConsultationEventDao">
+    <resultMap id="eventMap" type="com.iswust.model.ConsultationEvent">
+        <result column="event_id" property="eventId" jdbcType="INTEGER"/>
+        <result column="co_id" property="coId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="stu_num" property="stuNum" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="details" property="details" jdbcType="VARCHAR"/>
+        <result column="date" property="date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="addEvent" parameterType="com.iswust.model.ConsultationEvent">
+        INSERT INTO
+            community_event (co_id, `name`, stu_num, title, details, date)
+        VALUES
+            (#{event.coId}, #{event.name}, #{event.stuNum}, #{event.title}, #{event.details}, #{event.date})
+    </insert>
+
+    <update id="updateEvent" parameterType="com.iswust.model.ConsultationEvent">
+        UPDATE
+            community_event
+        SET
+            title = #{event.title}, details = #{event.details}
+        WHERE
+            event_id = #{event.eventId}
+    </update>
+
+    <delete id="deleteEvent" parameterType="com.iswust.model.ConsultationEvent">
+        DELETE FROM
+            community_event
+        WHERE
+            event_id = #{event.eventId}
+    </delete>
+
+    <select id="selectEventByCoId" resultMap="eventMap">
+        SELECT
+            *
+        FROM
+            community_event
+        WHERE
+            co_id = #{coId}
+    </select>
+
+    <select id="selectEventByStuNum" resultMap="eventMap">
+        SELECT
+            *
+        FROM
+            community_event
+        WHERE
+            stu_num = #{stuNum}
+    </select>
+
+
+</mapper>

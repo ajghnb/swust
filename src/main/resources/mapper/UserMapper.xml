@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.iswust.dao.UserDao">
+    <resultMap id="userMap" type="com.iswust.model.User">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="stu_num" property="stuNum" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="major" property="major" jdbcType="VARCHAR"/>
+        <result column="qq" property="qq" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="addUser" parameterType="com.iswust.model.User">
+        INSERT INTO
+            community_user
+        VALUES
+            (#{user.id}, #{user.name}, #{user.stuNum}, #{user.major}, #{user.qq})
+    </insert>
+
+    <update id="updateUser" parameterType="com.iswust.model.User">
+        UPDATE
+            community_user
+        SET
+            `name` = #{user.name}, major = #{user.major}, qq = #{user.qq}
+        WHERE
+            id = #{user.id} AND stu_num = #{user.stuNum}
+    </update>
+
+    <delete id="deleteUser" parameterType="com.iswust.model.User">
+        DELETE FROM
+            community_user
+        WHERE
+            id = #{user.id} AND stu_num = #{user.stuNum}
+    </delete>
+
+    <select id="selectUserById" resultMap="userMap">
+        SELECT
+            *
+        FROM
+            community_user
+        WHERE
+            id = #{id}
+    </select>
+
+
+</mapper>

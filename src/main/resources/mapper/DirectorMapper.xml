@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.iswust.dao.DirectorDao">
+    <resultMap id="directorMap" type="com.iswust.model.Director">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="stu_num" property="stuNum" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="phone_num" property="phoneNum" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="addDirectorUser" parameterType="com.iswust.model.Director">
+        INSERT INTO
+            community_director
+        VALUES
+            (#{user.id}, #{user.name}, #{user.stuNum}, #{user.phoneNum})
+    </insert>
+
+    <update id="updateDirectorUser" parameterType="com.iswust.model.Director">
+        UPDATE
+            community_director
+        SET
+            `name` = #{user.name}, stu_num = #{user.stuNum}, phone_num = #{user.phoneNum}
+        WHERE
+            id = #{user.id}
+    </update>
+
+    <delete id="deleteDirectorUser" parameterType="com.iswust.model.Director">
+        DELETE FROM
+            community_director
+        WHERE
+            id = #{user.id} AND stu_num = #{user.stuNum}
+    </delete>
+
+    <select id="selectDirectorById" resultMap="directorMap">
+        SELECT
+            *
+        FROM
+            community_director
+        WHERE
+            id = #{id}
+    </select>
+
+
+</mapper>
